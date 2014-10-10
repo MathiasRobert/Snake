@@ -3,25 +3,21 @@ package package_jeu;
 import java.awt.Rectangle;
 import java.awt.Color;
 import java.awt.Graphics;
-import javax.swing.JPanel;
+import java.util.LinkedList;
+import java.util.List;
 
-public class Joueur extends JPanel{
+public class Joueur{
 
 	private final int LARGEUR_SERPENT = 50;
 	private final int HAUTEUR_SERPENT = 50;
 
-	private Rectangle joueur = new Rectangle(200, 200, LARGEUR_SERPENT, HAUTEUR_SERPENT);
+	private List<Rectangle> joueur = new LinkedList();
+	
+	public Joueur() {
+		joueur.add(rectangle(100,100));
+	}
 
 	private int direction = 2;
-	
-	public void paintComponent(Graphics g){
-	    //On choisit une couleur de fond pour le rectangle
-	    g.setColor(Color.white);
-	    //On le dessine de sorte qu'il occupe toute la surface
-	    g.fillRect(0, 0, 1000, 1000);
-		g.setColor(Color.DARK_GRAY);
-		g.fillRect(joueur.x, joueur.y, joueur.width,joueur.height);
-	  }
 
 	/**
 	 * 
@@ -51,31 +47,9 @@ public class Joueur extends JPanel{
 	 * @return the joueur
 	 */
 
-	public Rectangle getJoueur() {
+	public List getJoueur() {
 
 		return joueur;
-
-	}
-
-	/**
-	 * 
-	 * @param x the joueur to set
-	 */
-
-	public void setJoueurX(int x) {
-
-		this.joueur.x = x;
-
-	}
-
-	/**
-	 * 
-	 * @param y the joueur to set
-	 */
-
-	public void setJoueurY(int y) {
-
-		this.joueur.y = y;
 
 	}
 	
@@ -86,8 +60,12 @@ public class Joueur extends JPanel{
 
 	public void ajoutSerpent() {
 
-		this.joueur.width += LARGEUR_SERPENT;
+		joueur.add(rectangle(joueur.get(joueur.size()-1).x+LARGEUR_SERPENT,joueur.get(joueur.size()-1).y));
 
 	}
-
+	
+	private Rectangle rectangle(int x, int y) {
+		Rectangle r = new Rectangle(x,y,LARGEUR_SERPENT, HAUTEUR_SERPENT);
+		return r;
+	}
 }

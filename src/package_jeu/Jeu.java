@@ -17,21 +17,20 @@ public class Jeu extends JFrame implements KeyListener {
 
 	private Joueur j = new Joueur();
 	private Pomme p = new Pomme();
+	private View vue = new View(j,p);
 
 	public Jeu() {
 		this.setTitle("Snake");
-		this.setSize(1000, 1000);
+		this.setSize(750, 750);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
-	    this.setContentPane(j);
-		move();
+	    this.setContentPane(vue);
 	}
 
 
 	private void move() {
 		addKeyListener(this);
-		for(;;) {
 			int x = j.getJoueur().x, y = j.getJoueur().y;
 			if (j.getDirection() == 1)
 				x--;
@@ -44,7 +43,7 @@ public class Jeu extends JFrame implements KeyListener {
 			
 			j.setJoueurX(x);
 			j.setJoueurY(y);
-			j.repaint();
+			vue.repaint();
 
 			
 			try {
@@ -52,7 +51,7 @@ public class Jeu extends JFrame implements KeyListener {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-		}
+		
 		
 	}
 	
@@ -94,11 +93,11 @@ public class Jeu extends JFrame implements KeyListener {
 	 */
 	public static void main(String[] args) {
 		Jeu jeu = new Jeu();
-//		while (true) {
-//			jeu.move();
-//			if(jeu.collision())
-//				jeu.aMangé();
-//		}
+		while (true) {
+			jeu.move();
+			if(jeu.collision())
+				jeu.aMangé();
+		}
 	}
 
 	@Override
