@@ -3,18 +3,20 @@
  */
 package package_jeu;
 
-import javax.swing.*;
-import javax.swing.event.*;
-
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Dimension;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import java.awt.Graphics;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 /**
  * @author mathiasrobert
  *
  */
-public class Jeu extends JFrame implements KeyListener {
+public class Jeu extends JFrame implements Constantes {
 
+<<<<<<< Updated upstream
 	private Joueur j = new Joueur();
 	private Pomme p = new Pomme();
 	private View vue = new View(j,p);
@@ -53,45 +55,79 @@ public class Jeu extends JFrame implements KeyListener {
 			}
 		
 		
+=======
+	private ModeleDuJeu modele;
+
+	public Jeu() {
+		// titre de la fenêtre
+	      super("Snake");
+	      // créer le modèle du jeu
+	      this.modele = new ModeleDuJeu();
+	      // fermeture de l'application lorsque la fenêtre est fermée
+	      setDefaultCloseOperation(EXIT_ON_CLOSE);
+	      // pas de redimensionnement possible de la fenêtre
+	      setResizable(false);
+	      // créer un conteneur qui affichera le jeu
+	      final JPanel content = new JPanel() {
+	            @Override
+	            protected void paintComponent(Graphics g) {
+	                  super.paintComponent(g);
+	                  // affichage du modèle du jeu
+	                  Jeu.this.modele.affichage(g);
+	            }
+	      };
+	      // dimension de ce conteneur 
+	      content.setPreferredSize(new Dimension(NBRE_DE_COLONNES * CASE_EN_PIXELS, NBRE_DE_LIGNES * CASE_EN_PIXELS));
+	      // ajouter le conteneur à la fenêtre
+	      setContentPane(content);
+	      // s'assurer du focus pour le listener clavier
+	      setFocusable(false);
+	      content.setFocusable(true);
+	      // le listener gérant les entrées au clavier
+	      content.addKeyListener(new KeyAdapter() {
+	            @Override
+	            public void keyPressed(KeyEvent e) {
+	                  Jeu.this.modele.gestionDuClavier(e);
+	            }
+	      });
+	      // Créer un thread infini
+	      Thread thread = new Thread(new Runnable() {                  
+	            @Override
+	            public void run() {
+	                  while (true) { // boucle infinie
+	                        // à chaque fois que la boucle est exécutée, la
+	                        // méthode de calcul du jeu est appelée.
+	                        // Comme la boucle est infinie, la méthode de calcul
+	                        // sera appelée en cycle perpétuel.
+	                	  	content.addKeyListener(new KeyAdapter() {
+	                	  		@Override
+	                	  		public void keyPressed(KeyEvent e) {
+	            	                Jeu.this.modele.gestionDuClavier(e);
+	                	  		}
+	                	  	});
+	                        Jeu.this.modele.calcul();
+	                        // demander à l'EDT de redessiner le conteneur
+	                        content.repaint();
+	                        try {
+	                            Thread.sleep(DELAY);
+	                        } catch (InterruptedException e) {
+	                        	e.printStackTrace();
+	                        }
+	                  }                        
+	            }
+	      });
+	      // lancer le thread
+	      thread.start();
+	      
+>>>>>>> Stashed changes
 	}
-	
-	private boolean collision() {
-			int leftJ, leftP;
-		    int rightJ, rightP;
-		    int topJ, topP;
-		    int bottomJ, bottomP;
 
-		    leftJ = j.getJoueur().x;
-		    rightJ = j.getJoueur().x + j.getJoueur().width;
-		    topJ = j.getJoueur().y;
-		    bottomJ = j.getJoueur().y + j.getJoueur().height;
-
-		    leftP = p.getPomme().x;
-		    rightP = p.getPomme().x + p.getPomme().width;
-		    topP = p.getPomme().y;
-		    bottomP = p.getPomme().y + p.getPomme().height;
-
-		    if(bottomJ <= topP)
-		        return false;
-		    if(topJ >= bottomP)
-		        return false;
-		    if(rightJ <= leftP)
-		        return false;
-		    if(leftJ >= rightP)
-		        return false;
-
-		    return true;
-	}
-	
-	private void aMangé() {
-		j.ajoutSerpent();
-		p.nouvellePomme();
-	}
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
+<<<<<<< Updated upstream
 		Jeu jeu = new Jeu();
 		while (true) {
 			jeu.move();
@@ -106,18 +142,17 @@ public class Jeu extends JFrame implements KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+=======
+		// création de la fenêtre
+        Jeu jeu = new Jeu();
+        // dimensionnement de la fenêre "au plus juste" suivant
+        // la taille des composants qu'elle contient
+        jeu.pack();
+        // centrage sur l'écran
+        jeu.setLocationRelativeTo(null);
+        // affichage
+        jeu.setVisible(true);
+>>>>>>> Stashed changes
 	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		if (e.getKeyChar() == 'q' && j.getDirection() != 2)
-			j.setDirection(1);
-		if (e.getKeyChar() == 'd' && j.getDirection() != 1)
-			j.setDirection(2);
-		if (e.getKeyChar() == 'z' && j.getDirection() != 4)
-			j.setDirection(3);
-		if (e.getKeyChar() == 's' && j.getDirection() != 3)
-			j.setDirection(4);
-	}
-
 }
+
