@@ -16,6 +16,10 @@ import java.awt.event.KeyEvent;
  */
 public class Jeu extends JFrame implements Constantes {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ModeleDuJeu modele;
 
 	public Jeu() {
@@ -29,7 +33,12 @@ public class Jeu extends JFrame implements Constantes {
 	      setResizable(false);
 	      // créer un conteneur qui affichera le jeu
 	      final JPanel content = new JPanel() {
-	            @Override
+	            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+				@Override
 	            protected void paintComponent(Graphics g) {
 	                  super.paintComponent(g);
 	                  // affichage du modèle du jeu
