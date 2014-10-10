@@ -16,46 +16,6 @@ import java.awt.event.KeyEvent;
  */
 public class Jeu extends JFrame implements Constantes {
 
-<<<<<<< Updated upstream
-	private Joueur j = new Joueur();
-	private Pomme p = new Pomme();
-	private View vue = new View(j,p);
-
-	public Jeu() {
-		this.setTitle("Snake");
-		this.setSize(750, 750);
-		this.setLocationRelativeTo(null);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setVisible(true);
-	    this.setContentPane(vue);
-	}
-
-
-	private void move() {
-		addKeyListener(this);
-			int x = j.getJoueur().x, y = j.getJoueur().y;
-			if (j.getDirection() == 1)
-				x--;
-			if (j.getDirection() == 2)
-				x++;
-			if(j.getDirection() == 3)
-				y--;
-			if(j.getDirection() == 4)
-				y++;
-			
-			j.setJoueurX(x);
-			j.setJoueurY(y);
-			vue.repaint();
-
-			
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		
-		
-=======
 	private ModeleDuJeu modele;
 
 	public Jeu() {
@@ -118,8 +78,6 @@ public class Jeu extends JFrame implements Constantes {
 	      });
 	      // lancer le thread
 	      thread.start();
-	      
->>>>>>> Stashed changes
 	}
 
 
@@ -127,22 +85,6 @@ public class Jeu extends JFrame implements Constantes {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-<<<<<<< Updated upstream
-		Jeu jeu = new Jeu();
-		while (true) {
-			jeu.move();
-			if(jeu.collision())
-				jeu.aMangé();
-		}
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-=======
 		// création de la fenêtre
         Jeu jeu = new Jeu();
         // dimensionnement de la fenêre "au plus juste" suivant
@@ -152,7 +94,6 @@ public class Jeu extends JFrame implements Constantes {
         jeu.setLocationRelativeTo(null);
         // affichage
         jeu.setVisible(true);
->>>>>>> Stashed changes
 	}
 }
 
