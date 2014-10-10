@@ -16,6 +16,7 @@ import java.awt.event.*;
 public class Jeu extends JFrame implements KeyListener {
 
 	private Joueur j = new Joueur();
+	private Pomme p = new Pomme();
 
 	public Jeu() {
 		this.setTitle("Snake");
@@ -23,35 +24,69 @@ public class Jeu extends JFrame implements KeyListener {
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
+	    this.setContentPane(j);
+		move();
 	}
 
-	public void paint(Graphics g) {
-		// On choisit une couleur de fond pour le rectangle
-		g.setColor(Color.white);
-		// On le dessine de sorte qu'il occupe toute la surface
-		g.fillRect(0, 0, this.getWidth(), this.getHeight());
-		g.setColor(Color.DARK_GRAY);
-		g.fill3DRect(j.getJoueur().x, j.getJoueur().y, j.getJoueur().width,
-				j.getJoueur().height, true);
-	}
 
 	private void move() {
 		addKeyListener(this);
-		this.repaint();
+		for(;;) {
+			int x = j.getJoueur().x, y = j.getJoueur().y;
+			if (j.getDirection() == 1)
+				x--;
+			if (j.getDirection() == 2)
+				x++;
+			if(j.getDirection() == 3)
+				y--;
+			if(j.getDirection() == 4)
+				y++;
+			
+			j.setJoueurX(x);
+			j.setJoueurY(y);
+			j.repaint();
 
-		if (j.getDirection() == 1)
-			j.setJoueurX(j.getJoueur().x - 1);
-		if (j.getDirection() == 2)
-			j.setJoueurX(j.getJoueur().x + 1);
-		if(j.getDirection() == 3)
-			j.setJoueurY(j.getJoueur().y - 1);
-		if(j.getDirection() == 4)
-			j.setJoueurY(j.getJoueur().y + 1);
-		try {
-			Thread.sleep(10);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+			
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
+		
+	}
+	
+	private boolean collision() {
+			int leftJ, leftP;
+		    int rightJ, rightP;
+		    int topJ, topP;
+		    int bottomJ, bottomP;
+
+		    leftJ = j.getJoueur().x;
+		    rightJ = j.getJoueur().x + j.getJoueur().width;
+		    topJ = j.getJoueur().y;
+		    bottomJ = j.getJoueur().y + j.getJoueur().height;
+
+		    leftP = p.getPomme().x;
+		    rightP = p.getPomme().x + p.getPomme().width;
+		    topP = p.getPomme().y;
+		    bottomP = p.getPomme().y + p.getPomme().height;
+
+		    if(bottomJ <= topP)
+		        return false;
+		    if(topJ >= bottomP)
+		        return false;
+		    if(rightJ <= leftP)
+		        return false;
+		    if(leftJ >= rightP)
+		        return false;
+
+		    return true;
+	}
+	
+	private void aMangé() {
+		j.ajoutSerpent();
+		p.nouvellePomme();
 	}
 
 	/**
@@ -59,9 +94,11 @@ public class Jeu extends JFrame implements KeyListener {
 	 */
 	public static void main(String[] args) {
 		Jeu jeu = new Jeu();
-		while (true) {
-			jeu.move();
-		}
+//		while (true) {
+//			jeu.move();
+//			if(jeu.collision())
+//				jeu.aMangé();
+//		}
 	}
 
 	@Override
