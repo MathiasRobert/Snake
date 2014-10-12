@@ -49,13 +49,13 @@ public class ModeleDuJeu implements Constantes{
     
     public void gestionDuClavier(KeyEvent event) {
         if (event.getKeyCode() == KeyEvent.VK_RIGHT && serpent.getDirection() != Direction.VERS_LA_GAUCHE) { // touche flèche droite
-        	serpent.setDirection(Direction.VERS_LA_DROITE);
+        	serpent.setDirectionTmp(Direction.VERS_LA_DROITE);
         } else if (event.getKeyCode() == KeyEvent.VK_LEFT && serpent.getDirection() != Direction.VERS_LA_DROITE) { // touche flèche gauche
-        	serpent.setDirection(Direction.VERS_LA_GAUCHE);
+        	serpent.setDirectionTmp(Direction.VERS_LA_GAUCHE);
         } else if (event.getKeyCode() == KeyEvent.VK_UP && serpent.getDirection() != Direction.VERS_LE_BAS) { // touche flèche haut
-        	serpent.setDirection(Direction.VERS_LE_HAUT);
+        	serpent.setDirectionTmp(Direction.VERS_LE_HAUT);
         } else if (event.getKeyCode() == KeyEvent.VK_DOWN && serpent.getDirection() != Direction.VERS_LE_HAUT) { // touche flèche bas
-        	serpent.setDirection(Direction.VERS_LE_BAS);
+        	serpent.setDirectionTmp(Direction.VERS_LE_BAS);
         }
   }
 }

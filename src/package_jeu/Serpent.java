@@ -7,6 +7,7 @@ public class Serpent implements Constantes{
 
 	private LinkedList<Case> listSerp;
 	private Direction direction;
+	private Direction directionTmp;
 	private boolean estMort;
 	private int nbrePommeMangé;
 	private int moveCounter;
@@ -20,6 +21,7 @@ public class Serpent implements Constantes{
         this.listSerp.add(new Case(18, 15));
         this.listSerp.add(new Case(19, 15));
         direction = Direction.VERS_LA_GAUCHE;
+        directionTmp = Direction.VERS_LA_GAUCHE;
         estMort = false;
         nbrePommeMangé = 0;
 	}
@@ -31,6 +33,7 @@ public class Serpent implements Constantes{
         if (this.moveCounter >= 4) {
               // remettre le compteur à zéro 
               this.moveCounter = 0;
+              direction = directionTmp;
               if(peutManger(pomme)) {
             	  mange();
             	  pomme.nouvellePomme();
@@ -105,6 +108,20 @@ public class Serpent implements Constantes{
 	 */
 	public int getNbrePommeMangé() {
 		return nbrePommeMangé;
+	}
+
+	/**
+	 * @return the directionTmp
+	 */
+	public Direction getDirectionTmp() {
+		return directionTmp;
+	}
+
+	/**
+	 * @param directionTmp the directionTmp to set
+	 */
+	public void setDirectionTmp(Direction directionTmp) {
+		this.directionTmp = directionTmp;
 	}
 	
 }
