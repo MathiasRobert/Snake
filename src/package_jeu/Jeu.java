@@ -4,8 +4,10 @@
 package package_jeu;
 
 import java.awt.Dimension;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
 import java.awt.Graphics;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -68,12 +70,6 @@ public class Jeu extends JFrame implements Constantes {
 	                        // méthode de calcul du jeu est appelée.
 	                        // Comme la boucle est infinie, la méthode de calcul
 	                        // sera appelée en cycle perpétuel.
-	                	  	content.addKeyListener(new KeyAdapter() {
-	                	  		@Override
-	                	  		public void keyPressed(KeyEvent e) {
-	            	                Jeu.this.modele.gestionDuClavier(e);
-	                	  		}
-	                	  	});
 	                        Jeu.this.modele.calcul();
 	                        // demander à l'EDT de redessiner le conteneur
 	                        content.repaint();
