@@ -5,10 +5,13 @@ package package_jeu;
 
 import java.awt.Dimension;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -23,6 +26,9 @@ public class Jeu extends JFrame implements Constantes {
 	 */
 	private static final long serialVersionUID = 1L;
 	private ModeleDuJeu modele;
+	private JButton réessayer;
+	private JButton quitter;
+
 
 	public Jeu() {
 		// titre de la fenêtre
@@ -53,7 +59,7 @@ public class Jeu extends JFrame implements Constantes {
 	      setContentPane(content);
 	      // s'assurer du focus pour le listener clavier
 	      setFocusable(false);
-	      content.setFocusable(true);
+	      content.setFocusable(true); 
 	      // le listener gérant les entrées au clavier
 	      content.addKeyListener(new KeyAdapter() {
 	            @Override
@@ -61,6 +67,10 @@ public class Jeu extends JFrame implements Constantes {
 	                  Jeu.this.modele.gestionDuClavier(e);
 	            }
 	      });
+	      
+	      //Initialise les boutons du menu réessayer
+	      initMenuRéessayer(content);
+	      
 	      // Créer un thread infini
 	      Thread thread = new Thread(new Runnable() {                  
 	            @Override
@@ -70,7 +80,11 @@ public class Jeu extends JFrame implements Constantes {
 	                        // méthode de calcul du jeu est appelée.
 	                        // Comme la boucle est infinie, la méthode de calcul
 	                        // sera appelée en cycle perpétuel.
-	                        Jeu.this.modele.calcul();
+	                        if(Jeu.this.modele.calcul()) {
+	                        	  content.add(réessayer);
+	                          	  content.add(quitter);
+	                        }
+
 	                        // demander à l'EDT de redessiner le conteneur
 	                        content.repaint();
 	                        try {
@@ -84,7 +98,34 @@ public class Jeu extends JFrame implements Constantes {
 	      // lancer le thread
 	      thread.start();
 	}
+	
+	private void initMenuRéessayer(final JPanel content) {
+		// Créer les bouttons
+	      content.setLayout(null);
+	      réessayer = new JButton("Réessayer");
+	      réessayer.setBounds(325, 500, 100, 50);
+	      quitter = new JButton("Quitter");
+	      quitter.setBounds(475, 500, 100, 50);
 
+	      // le listener gérant les entrées du bouton réessayer
+	      réessayer.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent arg0) {
+	                  Jeu.this.modele.réessayer();
+	                  content.remove(réessayer);
+	                  content.remove(quitter);
+	                  content.requestFocus();
+	            }
+	      });
+	      
+	      // le listener gérant les entrées du bouton quitter
+	      quitter.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent arg0) {
+	                  System.exit(0);
+	            }
+	      });
+	}
 
 	/**
 	 * @param args

@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
 
+
 public class ModeleDuJeu implements Constantes{
 	
 	private Serpent serpent;
@@ -20,12 +21,15 @@ public class ModeleDuJeu implements Constantes{
 	}
 	
 	 // le calcul du jeu
-    public void calcul() {
+    public boolean calcul() {
     	// calcul du serpent
-    	this.pomme.calcul();
-        this.serpent.calcul(this.pomme);  
-        if(this.serpent.getEstMort())
-        	partieFini = true;
+    	if(!this.partieFini) {
+    		this.pomme.calcul();
+            this.serpent.calcul(this.pomme);  
+            if(this.serpent.getEstMort())
+            	partieFini = true;
+    	}
+        return partieFini;
     }
     
     // le dessin graphique du jeu
@@ -57,5 +61,10 @@ public class ModeleDuJeu implements Constantes{
         } else if (event.getKeyCode() == KeyEvent.VK_DOWN && serpent.getDirection() != Direction.VERS_LE_HAUT) { // touche flèche bas
         	serpent.setDirectionTmp(Direction.VERS_LE_BAS);
         }
-  }
+    }
+    public void réessayer() {
+		serpent = new Serpent();
+		pomme = new Pomme();
+		partieFini = false;
+    }
 }
