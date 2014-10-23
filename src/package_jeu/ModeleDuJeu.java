@@ -62,7 +62,7 @@ public class ModeleDuJeu implements Constantes{
         	serpent.setDirectionTmp(Direction.VERS_LE_BAS);
         }
     }
-    public void réessayer() {
+    public void recommencer() {
 		serpent = new Serpent();
 		pomme = new Pomme();
 		partieFini = false;
